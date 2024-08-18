@@ -1,0 +1,34 @@
+---
+title: JVM
+description: 'Maven repository dependency'
+---
+
+Taficloud Has been published on [Jitpack](https://jitpack.io/#magnavisio/TafiCloudLib) and would be available on MavenCentral.
+
+Add it in your root build.gradle at the end of repositories:
+Step 1. Add Jitpack repository
+
+<CodeGroup>
+    ```groovy gradle
+    repositories {
+        mavenCentral()
+        maven {url 'https://jitpack.io'}
+    }
+    ```
+
+    ```xml maven
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+    ```
+</CodeGroup>
+
+Step 2. Add the dependency to your project level build.gradle file
+```groovy
+dependencies {
+    implementation 'com.github.magnavisio.TafiCloudLib:taficloud-jvm:$Version'
+}
+```

@@ -1,0 +1,45 @@
+---
+title: Kotlin Multiplatform
+description: 'Single codebase, multiple platforms'
+---
+
+Taficloud major sdk has be developed to support Kotlin Multiplatform
+Has been published on [Jitpack](https://jitpack.io/#magnavisio/TafiCloudLib) and would be available on MavenCentral.
+
+Add it in your root build.gradle at the end of repositories:
+
+## Supported Platforms
+
+- Android
+- IOS(Swift)
+- Web (Vue, React) via kotlinJs
+- JVM (Ktor, Spring)
+
+<Steps>
+    <Step title="Add Jitpack">
+        <CodeGroup>
+            ```groovy gradle
+            repositories {
+            mavenCentral()
+            maven {url 'https://jitpack.io'}
+        }
+            ```
+
+            ```xml maven
+            <repositories>
+                <repository>
+                    <id>jitpack.io</id>
+                    <url>https://jitpack.io</url>
+                </repository>
+            </repositories>
+            ```
+        </CodeGroup>
+    </Step>
+    <Step title="Add The Dependecy">
+        ```groovy
+        dependencies {
+        implementation 'com.github.magnavisio.TafiCloudLib:taficloud-jvm:$Version'
+    }
+        ```
+    </Step>
+</Steps>

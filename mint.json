@@ -8,8 +8,12 @@
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "light": "#004DE5",
+    "dark": "#004DE5",
+    "background": {
+      "dark": "#12131A",
+      "light": "#ffffff"
+    },
     "anchors": {
       "from": "#0D9373",
       "to": "#07C983"
@@ -31,41 +35,64 @@
       "url": "api-reference"
     }
   ],
+  "versions": [
+    "0.0.1"
+  ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "Issues",
+      "icon": "circle-question",
+      "url": "https://github.com/magnavisio/TafiCloudLib/issues"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "Source Code",
+      "icon": "github",
+      "url": "https://github.com/magnavisio/TafiCloudLib"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "introduction"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "SDKs",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        {
+          "group": "Mobile SDKs",
+          "pages": [
+            "sdks/mobile/android/setup",
+            "sdks/mobile/flutter/setup",
+            "sdks/mobile/ios/setup"
+          ]
+        },
+        {
+          "group": "Web SDKs",
+          "pages": [
+            "sdks/web/vue/setup"
+          ]
+        },
+        {
+          "group": "Backend SDKs",
+          "pages": [
+            "sdks/backend/jvm/setup"
+          ]
+        },
+        {
+          "group": "KMP",
+          "pages": [
+            "sdks/KMP/setup"
+          ]
+        },
+
+        {
+          "group": "REST API",
+          "pages": [
+            "rest/setup"
+          ]
+        }
       ]
     },
     {
@@ -84,8 +111,8 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "x": "https://twitter.com/MagnaVisio",
+    "github": "https://github.com/magnavisio",
+    "linkedin": "https://www.linkedin.com/company/magna-visio/"
   }
 }
