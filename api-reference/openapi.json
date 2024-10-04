@@ -1,8 +1,8 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.3",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "Taficloud API",
+    "description": "This the API documentation for interacting with Taficloud services, allowing you to upload files, download files, merge files, and manage media metadata through an intuitive API.",
     "license": {
       "name": "MIT"
     },
@@ -10,183 +10,2556 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "http://stash.taficloud.com"
     }
   ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
+  "tags": [],
   "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
+    "/media/compress-img-file": {
+      "post": {
+        "summary": "Compress File",
+        "deprecated": false,
+        "description": "Compression Options Documentation\n\n Supported Formats and Their Options\n\nPNG (.png)\n\n- **compressionLevel**: 0 (no compression) to 9 (maximum compression).\n    \n- **adaptiveFiltering**: Use adaptive filtering (true/false).\n    \n- **palette**: Use palette-based color reduction (true/false).\n    \n- **quality**: 0 to 100 (if palette is true).\n    \n- **effort**: 0 (fastest) to 10 (slowest).\n    \n\n##### JPEG (.jpg, .jpeg)\n\n- **quality**: 0 to 100.\n    \n- **progressive**: Create a progressive JPEG (true/false).\n    \n- **chromaSubsampling**: '4:4:4', '4:2:2', or '4:2:0'.\n    \n- **trellisQuantisation**: Use trellis quantization (true/false).\n    \n- **overshootDeringing**: Use overshoot deringing (true/false).\n    \n- **optimizeScans**: Optimize scans for progressive JPEG (true/false).\n    \n- **mozjpeg**: Use MozJPEG for compression (true/false).\n    \n\n##### WebP (.webp)\n\n- **quality**: 0 to 100.\n    \n- **alphaQuality**: 0 to 100.\n    \n- **lossless**: Use lossless compression (true/false).\n    \n- **nearLossless**: Use near-lossless compression (true/false).\n    \n- **smartSubsample**: Use smart subsampling (true/false).\n    \n- **effort**: 0 (fastest) to 10 (slowest).\n    \n\n##### TIFF (.tiff, .tif)\n\n- **quality**: 0 to 100.\n    \n- **compression**: 'lzw', 'deflate', or 'jpeg'.\n    \n- **predictor**: 'none', 'horizontal', or 'float'.\n    \n- **tile**: Use tiling (true/false).\n    \n- **tileWidth**: Tile width (if tile is true).\n    \n- **tileHeight**: Tile height (if tile is true).\n    \n- **pyramid**: Create a multi-resolution pyramid image (true/false).\n    \n- **bitdepth**: 8 or 16.\n    \n\n##### GIF (.gif)\n\n- **reoptimise**: Re-optimize the GIF (true/false).\n    \n- **effort**: 0 (fastest) to 10 (slowest).\n    \n\n##### AVIF (.avif)\n\n- **quality**: 0 to 100.\n    \n- **lossless**: Use lossless compression (true/false).\n    \n- **speed**: 0 (slowest) to 10 (fastest).\n    \n- **chromaSubsampling**: '4:4:4', '4:2:2', or '4:2:0'.",
+        "tags": [],
         "parameters": [
           {
-            "name": "limit",
+            "name": "download",
             "in": "query",
-            "description": "The maximum number of results to return",
+            "description": "",
+            "required": false,
+            "example": "true",
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "options": {
+                    "example": "{ \"quality\": 50}",
+                    "type": "string"
                   }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+                },
+                "required": [
+                  "file",
+                  "options"
+                ]
               }
             }
           }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
         },
         "responses": {
           "200": {
-            "description": "plant response",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "type": "object",
+                  "properties": {}
                 }
               }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/media/upload": {
+      "post": {
+        "summary": "Upload Media",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "folder": {
+                    "example": "general",
+                    "type": "string"
+                  },
+                  "folderId": {
+                    "example": "5",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
               }
             }
           }
-        }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "organizationId": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "key": {
+                          "type": "string"
+                        },
+                        "bucket": {
+                          "type": "string"
+                        },
+                        "mimetype": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "metaData": {
+                          "type": "object",
+                          "properties": {
+                            "ipAddress": {
+                              "type": "string"
+                            },
+                            "userAgent": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "ipAddress",
+                            "userAgent"
+                          ]
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "organizationId",
+                        "name",
+                        "url",
+                        "key",
+                        "bucket",
+                        "mimetype",
+                        "size",
+                        "metaData",
+                        "updatedAt",
+                        "createdAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "200",
+                    "value": {
+                      "statusCode": 200,
+                      "message": "Success",
+                      "data": {
+                        "id": 378,
+                        "organizationId": 1,
+                        "name": "dewallet_1727871941350-1b06e9875e769a103c01e49fbc53299ec",
+                        "url": "https://dev-stash.taficloud.com/media/download?media=magnavisio/dewallet_1727871941350-1b06e9875e769a103c01e49fbc53299ec-e17c2e769ed7660e1ae6910be709b639.jpg",
+                        "key": "magnavisio/dewallet_1727871941350-1b06e9875e769a103c01e49fbc53299ec-e17c2e769ed7660e1ae6910be709b639.jpg",
+                        "bucket": "cloudloom-bucket",
+                        "mimetype": "image/jpeg",
+                        "size": 78.6845703125,
+                        "metaData": {
+                          "ipAddress": "95.90.247.14",
+                          "userAgent": "PostmanRuntime/7.42.0"
+                        },
+                        "updatedAt": "2024-10-04T08:52:05.264Z",
+                        "createdAt": "2024-10-04T08:52:05.264Z"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "error": {
+                          "type": "string"
+                        },
+                        "statusCode": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "message",
+                        "error",
+                        "statusCode"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "path",
+                    "message",
+                    "error"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "400",
+                    "value": {
+                      "statusCode": 400,
+                      "path": "/media/upload",
+                      "message": "File is required",
+                      "error": {
+                        "message": "File is required",
+                        "error": "Bad Request",
+                        "statusCode": 400
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/media/upload/base64": {
+      "post": {
+        "summary": "Upload Base64",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string"
+                  },
+                  "mimetype": {
+                    "type": "string"
+                  },
+                  "folder": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file",
+                  "mimetype",
+                  "folder"
+                ]
+              },
+              "example": {
+                "file": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAACxLAAAsSwGlPZapAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAaJSURBVHgB7Z1NVhtHEMf/PSPjLJWlP5KMT2B8gsjbPCDkBMgnwJzA8gmAEyCfwErwHjgBcAKUGEyWyi7YmulUtcB+EKPpmf6YHty/92zxHi2Bu6aruv9V1QYikUgkEolEIpFIJBKJRCLfCgI+WD3pIr+3Sl89BZKMXhcB2aXX7o2RE0iMIcQEKI5o7AHSi32MnkxwR3FnAJ704rt1SNmjye7BCDGiv95g9+EIdwz7Bvg88cVL/P8JN2VMxnyN3cdD3BHsGmDl/JWjib+OxBE6yW8YPRij5dgxwOp5hmnxlj5tEf6guCBoNTzcQotJYMrK+Rry4tDz5DO0yuSmWnUtxswAS8rlDOHa5cxDFoM2G6G+C+LJF/SPDwWRDPDHg9doGfUMsPwX7enTtwgOsdG2mFDdABxw2ec36XZuZ4I0edam3VH1GJDLPYQ5+QyduOUOWkQ1A7Dfh8wQNHTqVi6yHei7oJnrOUEb4IPau0fP0AL0V0BetGerx2eS1fc9tAA9A/DTD/TRJvK0FQ+MngHyvIfWIReVMBg4Ha1RAqRuwj+CtpVFsY3OdKtyTmCJXFCxsIfls3kSyVX+gf7IYyTJPvDvkc/8Q3kQbjL4ppL29I+PYMLK2SFNckWdSuxTQugN0k8j18Yod0HNuZ+h8eQzRbGBynACSewgXzihFbRzGQOdUG4A/yon/8wxnWjt6DrvfthXrqweHEP6ygOw4OfAEOUGkMlT+EZS1is0OYFV17ygmHLah0V0dkEZfMJPv82U4+rpIsUAW7uhTLkmi/K3hgE8Sw9J8hw2ycU6bMOrYYmCu4VtrnlGzCaStpw2Xc/SeQ+uDpAcG/OFQ9O4EI4B2PV0Ona1fFGswS2ZigsGKyEcA7gJvD5OwmSE+7WTU2EYgNVLF7U+EsfwAkvgHzZRgzAMwDU+bj53aHAGqIh8WUeBbd4AonC35+fPTeRzpfX4IE92qsYDPTHOFRx4k6nbJPpMzniixDkhsjkj6fvJzxSLMtQnIwGQKwMHum8oF+OWzxzqoPJFUHWevKUsKOdtZoQJ0o9PdEW8Bl2QGAVXZMsuq8hfwIzu5SrQojkDpKKGSukBFu9gGDMk5U80Y0EzBnAZeO0whhldOhv0dQb6N4CPwGuKkDYk+F91Bvk3gDrxBtxytPL3uh31lA5nGm7ItwGGQXe3cKm9zC2uzk7pSvJrgJTyrKHypdTeHlNRWqGnYQCbp8jOGCGyQjqOi1L7+Qc/RbMn4aZR7bOkZErTLs5bEPipbIhORsy8MuGKougjFFS5zf1D8xbaOWgEc42qCPknbCHxSgW6puE8sSqzd55uzcoGlLsgmYxhsyyOA93yWY++OPjq99N0TIe0fbhi1lS4ddmp3zgalXH8tIhD+GVM2u4Gdn8cwSZN9LXtPpo7xxox4NPYX1LjM5nqQfvl1F5RmKudjiHlBuBTqxT2AnEV7lkoKeGdzvIHlpi1FUqf6B7EfkcTFCKDCT52OvMZlw3QM0B6MUTb8LfTmUP5IVbPAEo845Jt39SULrhJLxcNTz4j/ykbUUUL8uuG6taIspo5ayIPYJtZ/tDqG4DdkM/dkMyrZ8yUoGZTzTQkzUs3L9U65ZfOBvQOD81vnC9+qF8rpDSdBS6M6iMcJnQG+L5sUDU5uvNxy8sqqJIvVncVLXD3fh9hcaAzqJoBOBgX2IZTyG/q5ovVNpN2Ok108ZQitU7x1RMyahU4rDRL5Fhr3Op5b3ZpSIBXJ1TYQFQ3gFoFxrUzt6Nz+OKdDpeFh3ppiMS+7tB6KUmuneFmCidwMntO00NoO52vUaHBsH5OuDMdOHNFqunhhhGUpnO2E6Kgdo2KNU9mtyaqWsri0GIT3E2G9Csek1+i1J7oI9x7imaomqfkuT8DMKrqONlDBHWKjc3LUlQtpQyzztMnHBNrSCd26oJ2H2/RL9C6GwutoRoMKSbWeqtNlk8p6SFq9Uq1lhp+//rbbcNSsEh3HAbmcDCc/NlHuMBOp0nYWJh8xk1tqGqOu3jm7rDWMAJHNiZ/9lGuUS6ps3lnVoNUN3gNbJXYuzfAFUvvB0jStdYagmV4SRqY5VolfwZglHY/7bfKECb31ml9fFOoi4+StQZLRubjeOK//JimUUkVvpcuAGMoN8NFaNNtyud6+d+bmjfATZS2lC6Sv83o9SmE7NKkdO0nXtRVlRO1oylI8JOUQO9Mj4LuX4tEIpFIJBKJRCKRSCQSibSa/wDbWoOBgn+DywAAAABJRU5ErkJggg==",
+                "mimetype": "image/png",
+                "folder": "general"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "organizationId": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "key": {
+                          "type": "string"
+                        },
+                        "bucket": {
+                          "type": "string"
+                        },
+                        "mimetype": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "metaData": {
+                          "type": "object",
+                          "properties": {
+                            "ipAddress": {
+                              "type": "string"
+                            },
+                            "userAgent": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "ipAddress",
+                            "userAgent"
+                          ]
+                        },
+                        "folderId": {
+                          "type": "integer"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "organizationId",
+                        "name",
+                        "url",
+                        "key",
+                        "bucket",
+                        "mimetype",
+                        "size",
+                        "metaData",
+                        "folderId",
+                        "updatedAt",
+                        "createdAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Upload Base64",
+                    "value": {
+                      "statusCode": 200,
+                      "message": "Success",
+                      "data": {
+                        "id": 6,
+                        "organizationId": 2,
+                        "name": "aa410f927e2ae857ee5107f8ee81f104e01",
+                        "url": "http://localhost:8087/media/download?media=gmail-org/general/aa410f927e2ae857ee5107f8ee81f104e01.jpg",
+                        "key": "gmail-org/general/aa410f927e2ae857ee5107f8ee81f104e01.jpg",
+                        "bucket": "cloudloom-bucket",
+                        "mimetype": "image/jpeg",
+                        "size": 361.5498046875,
+                        "metaData": {
+                          "ipAddress": "::ffff:127.0.0.1",
+                          "userAgent": "PostmanRuntime/7.39.0"
+                        },
+                        "folderId": 2,
+                        "updatedAt": "2024-06-28T12:39:24.277Z",
+                        "createdAt": "2024-06-28T12:39:24.277Z"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/media/metadata": {
+      "get": {
+        "summary": "Get image metadata",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
+            "name": "mediaKey",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "magnavisio/Cloud upload-d69c355e85cf6cc17810a3bc11cedcba6.png",
             "schema": {
-              "type": "integer",
-              "format": "int64"
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mediaKey": {
+                    "example": "test-3/general/aowa6ii-a6c7a7a866d263d093ac8f9681ea7600.jpg",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "mediaKey"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "format": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "integer"
+                        },
+                        "width": {
+                          "type": "integer"
+                        },
+                        "height": {
+                          "type": "integer"
+                        },
+                        "space": {
+                          "type": "string"
+                        },
+                        "channels": {
+                          "type": "integer"
+                        },
+                        "depth": {
+                          "type": "string"
+                        },
+                        "density": {
+                          "type": "integer"
+                        },
+                        "chromaSubsampling": {
+                          "type": "string"
+                        },
+                        "isProgressive": {
+                          "type": "boolean"
+                        },
+                        "resolutionUnit": {
+                          "type": "string"
+                        },
+                        "hasProfile": {
+                          "type": "boolean"
+                        },
+                        "hasAlpha": {
+                          "type": "boolean"
+                        },
+                        "exif": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "data": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "data"
+                          ]
+                        },
+                        "iptc": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "data": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "data"
+                          ]
+                        },
+                        "xmp": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "data": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "data"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "format",
+                        "size",
+                        "width",
+                        "height",
+                        "space",
+                        "channels",
+                        "depth",
+                        "density",
+                        "chromaSubsampling",
+                        "isProgressive",
+                        "resolutionUnit",
+                        "hasProfile",
+                        "hasAlpha",
+                        "exif",
+                        "iptc",
+                        "xmp"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Get image metadata",
+                    "value": {
+                      "statusCode": 200,
+                      "message": "Success",
+                      "data": {
+                        "format": "jpeg",
+                        "size": 354167,
+                        "width": 2048,
+                        "height": 1072,
+                        "space": "srgb",
+                        "channels": 3,
+                        "depth": "uchar",
+                        "density": 300,
+                        "chromaSubsampling": "4:2:0",
+                        "isProgressive": false,
+                        "resolutionUnit": "inch",
+                        "hasProfile": false,
+                        "hasAlpha": false,
+                        "exif": {
+                          "type": "Buffer",
+                          "data": [
+                            69,
+                            120,
+                            105,
+                            102,
+                            0,
+                            0,
+                            73,
+                            73,
+                            42,
+                            0,
+                            8,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0
+                          ]
+                        },
+                        "iptc": {
+                          "type": "Buffer",
+                          "data": [
+                            80,
+                            104,
+                            111,
+                            116,
+                            111,
+                            115,
+                            104,
+                            111,
+                            112,
+                            32,
+                            51,
+                            46,
+                            48,
+                            0,
+                            56,
+                            66,
+                            73,
+                            77,
+                            4,
+                            4,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            54,
+                            28,
+                            2,
+                            80,
+                            0,
+                            26,
+                            84,
+                            97,
+                            108,
+                            108,
+                            101,
+                            99,
+                            32,
+                            74,
+                            101,
+                            97,
+                            110,
+                            32,
+                            77,
+                            105,
+                            99,
+                            104,
+                            101,
+                            108,
+                            32,
+                            47,
+                            32,
+                            69,
+                            121,
+                            101,
+                            69,
+                            109,
+                            28,
+                            2,
+                            110,
+                            0,
+                            18,
+                            71,
+                            101,
+                            116,
+                            116,
+                            121,
+                            32,
+                            73,
+                            109,
+                            97,
+                            103,
+                            101,
+                            115,
+                            47,
+                            69,
+                            121,
+                            101,
+                            69,
+                            109
+                          ]
+                        },
+                        "xmp": {
+                          "type": "Buffer",
+                          "data": [
+                            60,
+                            63,
+                            120,
+                            112,
+                            97,
+                            99,
+                            107,
+                            101,
+                            116,
+                            32,
+                            98,
+                            101,
+                            103,
+                            105,
+                            110,
+                            61,
+                            34,
+                            239,
+                            187,
+                            191,
+                            34,
+                            32,
+                            105,
+                            100,
+                            61,
+                            34,
+                            87,
+                            53,
+                            77,
+                            48,
+                            77,
+                            112,
+                            67,
+                            101,
+                            104,
+                            105,
+                            72,
+                            122,
+                            114,
+                            101,
+                            83,
+                            122,
+                            78,
+                            84,
+                            99,
+                            122,
+                            107,
+                            99,
+                            57,
+                            100,
+                            34,
+                            63,
+                            62,
+                            10,
+                            60,
+                            120,
+                            58,
+                            120,
+                            109,
+                            112,
+                            109,
+                            101,
+                            116,
+                            97,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            120,
+                            61,
+                            34,
+                            97,
+                            100,
+                            111,
+                            98,
+                            101,
+                            58,
+                            110,
+                            115,
+                            58,
+                            109,
+                            101,
+                            116,
+                            97,
+                            47,
+                            34,
+                            62,
+                            10,
+                            9,
+                            60,
+                            114,
+                            100,
+                            102,
+                            58,
+                            82,
+                            68,
+                            70,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            114,
+                            100,
+                            102,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            58,
+                            47,
+                            47,
+                            119,
+                            119,
+                            119,
+                            46,
+                            119,
+                            51,
+                            46,
+                            111,
+                            114,
+                            103,
+                            47,
+                            49,
+                            57,
+                            57,
+                            57,
+                            47,
+                            48,
+                            50,
+                            47,
+                            50,
+                            50,
+                            45,
+                            114,
+                            100,
+                            102,
+                            45,
+                            115,
+                            121,
+                            110,
+                            116,
+                            97,
+                            120,
+                            45,
+                            110,
+                            115,
+                            35,
+                            34,
+                            62,
+                            10,
+                            9,
+                            9,
+                            60,
+                            114,
+                            100,
+                            102,
+                            58,
+                            68,
+                            101,
+                            115,
+                            99,
+                            114,
+                            105,
+                            112,
+                            116,
+                            105,
+                            111,
+                            110,
+                            32,
+                            114,
+                            100,
+                            102,
+                            58,
+                            97,
+                            98,
+                            111,
+                            117,
+                            116,
+                            61,
+                            34,
+                            34,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            112,
+                            104,
+                            111,
+                            116,
+                            111,
+                            115,
+                            104,
+                            111,
+                            112,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            58,
+                            47,
+                            47,
+                            110,
+                            115,
+                            46,
+                            97,
+                            100,
+                            111,
+                            98,
+                            101,
+                            46,
+                            99,
+                            111,
+                            109,
+                            47,
+                            112,
+                            104,
+                            111,
+                            116,
+                            111,
+                            115,
+                            104,
+                            111,
+                            112,
+                            47,
+                            49,
+                            46,
+                            48,
+                            47,
+                            34,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            73,
+                            112,
+                            116,
+                            99,
+                            52,
+                            120,
+                            109,
+                            112,
+                            67,
+                            111,
+                            114,
+                            101,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            58,
+                            47,
+                            47,
+                            105,
+                            112,
+                            116,
+                            99,
+                            46,
+                            111,
+                            114,
+                            103,
+                            47,
+                            115,
+                            116,
+                            100,
+                            47,
+                            73,
+                            112,
+                            116,
+                            99,
+                            52,
+                            120,
+                            109,
+                            112,
+                            67,
+                            111,
+                            114,
+                            101,
+                            47,
+                            49,
+                            46,
+                            48,
+                            47,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            47,
+                            34,
+                            32,
+                            32,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            71,
+                            101,
+                            116,
+                            116,
+                            121,
+                            73,
+                            109,
+                            97,
+                            103,
+                            101,
+                            115,
+                            71,
+                            73,
+                            70,
+                            84,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            58,
+                            47,
+                            47,
+                            120,
+                            109,
+                            112,
+                            46,
+                            103,
+                            101,
+                            116,
+                            116,
+                            121,
+                            105,
+                            109,
+                            97,
+                            103,
+                            101,
+                            115,
+                            46,
+                            99,
+                            111,
+                            109,
+                            47,
+                            103,
+                            105,
+                            102,
+                            116,
+                            47,
+                            49,
+                            46,
+                            48,
+                            47,
+                            34,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            100,
+                            99,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            58,
+                            47,
+                            47,
+                            112,
+                            117,
+                            114,
+                            108,
+                            46,
+                            111,
+                            114,
+                            103,
+                            47,
+                            100,
+                            99,
+                            47,
+                            101,
+                            108,
+                            101,
+                            109,
+                            101,
+                            110,
+                            116,
+                            115,
+                            47,
+                            49,
+                            46,
+                            49,
+                            47,
+                            34,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            112,
+                            108,
+                            117,
+                            115,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            58,
+                            47,
+                            47,
+                            110,
+                            115,
+                            46,
+                            117,
+                            115,
+                            101,
+                            112,
+                            108,
+                            117,
+                            115,
+                            46,
+                            111,
+                            114,
+                            103,
+                            47,
+                            108,
+                            100,
+                            102,
+                            47,
+                            120,
+                            109,
+                            112,
+                            47,
+                            49,
+                            46,
+                            48,
+                            47,
+                            34,
+                            32,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            105,
+                            112,
+                            116,
+                            99,
+                            69,
+                            120,
+                            116,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            58,
+                            47,
+                            47,
+                            105,
+                            112,
+                            116,
+                            99,
+                            46,
+                            111,
+                            114,
+                            103,
+                            47,
+                            115,
+                            116,
+                            100,
+                            47,
+                            73,
+                            112,
+                            116,
+                            99,
+                            52,
+                            120,
+                            109,
+                            112,
+                            69,
+                            120,
+                            116,
+                            47,
+                            50,
+                            48,
+                            48,
+                            56,
+                            45,
+                            48,
+                            50,
+                            45,
+                            50,
+                            57,
+                            47,
+                            34,
+                            32,
+                            120,
+                            109,
+                            108,
+                            110,
+                            115,
+                            58,
+                            120,
+                            109,
+                            112,
+                            82,
+                            105,
+                            103,
+                            104,
+                            116,
+                            115,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            58,
+                            47,
+                            47,
+                            110,
+                            115,
+                            46,
+                            97,
+                            100,
+                            111,
+                            98,
+                            101,
+                            46,
+                            99,
+                            111,
+                            109,
+                            47,
+                            120,
+                            97,
+                            112,
+                            47,
+                            49,
+                            46,
+                            48,
+                            47,
+                            114,
+                            105,
+                            103,
+                            104,
+                            116,
+                            115,
+                            47,
+                            34,
+                            32,
+                            112,
+                            104,
+                            111,
+                            116,
+                            111,
+                            115,
+                            104,
+                            111,
+                            112,
+                            58,
+                            67,
+                            114,
+                            101,
+                            100,
+                            105,
+                            116,
+                            61,
+                            34,
+                            71,
+                            101,
+                            116,
+                            116,
+                            121,
+                            32,
+                            73,
+                            109,
+                            97,
+                            103,
+                            101,
+                            115,
+                            47,
+                            69,
+                            121,
+                            101,
+                            69,
+                            109,
+                            34,
+                            32,
+                            71,
+                            101,
+                            116,
+                            116,
+                            121,
+                            73,
+                            109,
+                            97,
+                            103,
+                            101,
+                            115,
+                            71,
+                            73,
+                            70,
+                            84,
+                            58,
+                            65,
+                            115,
+                            115,
+                            101,
+                            116,
+                            73,
+                            68,
+                            61,
+                            34,
+                            53,
+                            53,
+                            48,
+                            55,
+                            53,
+                            48,
+                            52,
+                            57,
+                            49,
+                            34,
+                            32,
+                            120,
+                            109,
+                            112,
+                            82,
+                            105,
+                            103,
+                            104,
+                            116,
+                            115,
+                            58,
+                            87,
+                            101,
+                            98,
+                            83,
+                            116,
+                            97,
+                            116,
+                            101,
+                            109,
+                            101,
+                            110,
+                            116,
+                            61,
+                            34,
+                            104,
+                            116,
+                            116,
+                            112,
+                            115,
+                            58,
+                            47,
+                            47,
+                            119,
+                            119,
+                            119,
+                            46,
+                            103,
+                            101,
+                            116,
+                            116,
+                            121,
+                            105,
+                            109,
+                            97,
+                            103,
+                            101,
+                            115,
+                            46,
+                            99,
+                            111,
+                            109,
+                            47,
+                            101,
+                            117,
+                            108,
+                            97,
+                            63,
+                            117,
+                            116,
+                            109,
+                            95,
+                            109,
+                            101,
+                            100,
+                            105,
+                            117,
+                            109,
+                            61,
+                            111,
+                            114,
+                            103,
+                            97,
+                            110,
+                            105,
+                            99,
+                            38,
+                            97,
+                            109,
+                            112,
+                            59,
+                            117,
+                            116,
+                            109,
+                            95,
+                            115,
+                            111,
+                            117,
+                            114,
+                            99,
+                            101,
+                            61,
+                            103,
+                            111,
+                            111,
+                            103,
+                            108,
+                            101,
+                            38,
+                            97,
+                            109,
+                            112,
+                            59,
+                            117,
+                            116,
+                            109,
+                            95,
+                            99,
+                            97,
+                            109,
+                            112,
+                            97,
+                            105,
+                            103,
+                            110,
+                            61,
+                            105,
+                            112,
+                            116,
+                            99,
+                            117,
+                            114,
+                            108,
+                            34,
+                            32,
+                            62,
+                            10,
+                            60,
+                            100,
+                            99,
+                            58,
+                            99,
+                            114,
+                            101,
+                            97,
+                            116,
+                            111,
+                            114,
+                            62,
+                            60,
+                            114,
+                            100,
+                            102,
+                            58,
+                            83,
+                            101,
+                            113,
+                            62,
+                            60,
+                            114,
+                            100,
+                            102,
+                            58,
+                            108,
+                            105,
+                            62,
+                            84,
+                            97,
+                            108,
+                            108,
+                            101,
+                            99,
+                            32,
+                            74,
+                            101,
+                            97,
+                            110,
+                            32,
+                            77,
+                            105,
+                            99,
+                            104,
+                            101,
+                            108,
+                            32,
+                            47,
+                            32,
+                            69,
+                            121,
+                            101,
+                            69,
+                            109,
+                            60,
+                            47,
+                            114,
+                            100,
+                            102,
+                            58,
+                            108,
+                            105,
+                            62,
+                            60,
+                            47,
+                            114,
+                            100,
+                            102,
+                            58,
+                            83,
+                            101,
+                            113,
+                            62,
+                            60,
+                            47,
+                            100,
+                            99,
+                            58,
+                            99,
+                            114,
+                            101,
+                            97,
+                            116,
+                            111,
+                            114,
+                            62,
+                            60,
+                            112,
+                            108,
+                            117,
+                            115,
+                            58,
+                            76,
+                            105,
+                            99,
+                            101,
+                            110,
+                            115,
+                            111,
+                            114,
+                            62,
+                            60,
+                            114,
+                            100,
+                            102,
+                            58,
+                            83,
+                            101,
+                            113,
+                            62,
+                            60,
+                            114,
+                            100,
+                            102,
+                            58,
+                            108,
+                            105,
+                            32,
+                            114,
+                            100,
+                            102,
+                            58,
+                            112,
+                            97,
+                            114,
+                            115,
+                            101,
+                            84,
+                            121,
+                            112,
+                            101,
+                            61,
+                            39,
+                            82,
+                            101,
+                            115,
+                            111,
+                            117,
+                            114,
+                            99,
+                            101,
+                            39,
+                            62,
+                            60,
+                            112,
+                            108,
+                            117,
+                            115,
+                            58,
+                            76,
+                            105,
+                            99,
+                            101,
+                            110,
+                            115,
+                            111,
+                            114,
+                            85,
+                            82,
+                            76,
+                            62,
+                            104,
+                            116,
+                            116,
+                            112,
+                            115,
+                            58,
+                            47,
+                            47,
+                            119,
+                            119,
+                            119,
+                            46,
+                            103,
+                            101,
+                            116,
+                            116,
+                            121,
+                            105,
+                            109,
+                            97,
+                            103,
+                            101,
+                            115,
+                            46,
+                            99,
+                            111,
+                            109,
+                            47,
+                            100,
+                            101,
+                            116,
+                            97,
+                            105,
+                            108,
+                            47,
+                            53,
+                            53,
+                            48,
+                            55,
+                            53,
+                            48,
+                            52,
+                            57,
+                            49,
+                            63,
+                            117,
+                            116,
+                            109,
+                            95,
+                            109,
+                            101,
+                            100,
+                            105,
+                            117,
+                            109,
+                            61,
+                            111,
+                            114,
+                            103,
+                            97,
+                            110,
+                            105,
+                            99,
+                            38,
+                            97,
+                            109,
+                            112,
+                            59,
+                            117,
+                            116,
+                            109,
+                            95,
+                            115,
+                            111,
+                            117,
+                            114,
+                            99,
+                            101,
+                            61,
+                            103,
+                            111,
+                            111,
+                            103,
+                            108,
+                            101,
+                            38,
+                            97,
+                            109,
+                            112,
+                            59,
+                            117,
+                            116,
+                            109,
+                            95,
+                            99,
+                            97,
+                            109,
+                            112,
+                            97,
+                            105,
+                            103,
+                            110,
+                            61,
+                            105,
+                            112,
+                            116,
+                            99,
+                            117,
+                            114,
+                            108,
+                            60,
+                            47,
+                            112,
+                            108,
+                            117,
+                            115,
+                            58,
+                            76,
+                            105,
+                            99,
+                            101,
+                            110,
+                            115,
+                            111,
+                            114,
+                            85,
+                            82,
+                            76,
+                            62,
+                            60,
+                            47,
+                            114,
+                            100,
+                            102,
+                            58,
+                            108,
+                            105,
+                            62,
+                            60,
+                            47,
+                            114,
+                            100,
+                            102,
+                            58,
+                            83,
+                            101,
+                            113,
+                            62,
+                            60,
+                            47,
+                            112,
+                            108,
+                            117,
+                            115,
+                            58,
+                            76,
+                            105,
+                            99,
+                            101,
+                            110,
+                            115,
+                            111,
+                            114,
+                            62,
+                            10,
+                            9,
+                            9,
+                            60,
+                            47,
+                            114,
+                            100,
+                            102,
+                            58,
+                            68,
+                            101,
+                            115,
+                            99,
+                            114,
+                            105,
+                            112,
+                            116,
+                            105,
+                            111,
+                            110,
+                            62,
+                            10,
+                            9,
+                            60,
+                            47,
+                            114,
+                            100,
+                            102,
+                            58,
+                            82,
+                            68,
+                            70,
+                            62,
+                            10,
+                            60,
+                            47,
+                            120,
+                            58,
+                            120,
+                            109,
+                            112,
+                            109,
+                            101,
+                            116,
+                            97,
+                            62,
+                            10,
+                            60,
+                            63,
+                            120,
+                            112,
+                            97,
+                            99,
+                            107,
+                            101,
+                            116,
+                            32,
+                            101,
+                            110,
+                            100,
+                            61,
+                            34,
+                            119,
+                            34,
+                            63,
+                            62,
+                            10
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/media/convert": {
+      "post": {
+        "summary": "convert Format",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "mediaKey": {
+                    "type": "string"
+                  },
+                  "format": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "mediaKey",
+                  "format"
+                ]
+              },
+              "example": {
+                "mediaKey": "magnavisio/Cloud upload-d69c355e85cf6cc17810a3bc11cedcba6.png",
+                "format": "jpeg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "organizationId": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "key": {
+                          "type": "string"
+                        },
+                        "bucket": {
+                          "type": "string"
+                        },
+                        "mimetype": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "metaData": {
+                          "type": "object",
+                          "properties": {
+                            "ipAddress": {
+                              "type": "string"
+                            },
+                            "userAgent": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "ipAddress",
+                            "userAgent"
+                          ]
+                        },
+                        "folderId": {
+                          "type": "integer"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "organizationId",
+                        "name",
+                        "url",
+                        "key",
+                        "bucket",
+                        "mimetype",
+                        "size",
+                        "metaData",
+                        "folderId",
+                        "updatedAt",
+                        "createdAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "convert Format",
+                    "value": {
+                      "statusCode": 200,
+                      "message": "Success",
+                      "data": {
+                        "id": 21,
+                        "organizationId": 7,
+                        "name": "zeda/zeda-folder/gettyimages-631799942-2048x2048-a0efd50dac0c1d1074590730362231010b8.png",
+                        "url": "http://localhost:8087/media/download?media=zeda/zeda-folder/gettyimages-631799942-2048x2048-a0efd50dac0c1d1074590730362231010b8.jpg",
+                        "key": "zeda/zeda-folder/gettyimages-631799942-2048x2048-a0efd50dac0c1d1074590730362231010b8.jpg",
+                        "bucket": "cloudloom-bucket",
+                        "mimetype": "image/png",
+                        "size": 678.2607421875,
+                        "metaData": {
+                          "ipAddress": "::ffff:127.0.0.1",
+                          "userAgent": "PostmanRuntime/7.39.0"
+                        },
+                        "folderId": 19,
+                        "updatedAt": "2024-06-12T15:00:04.185Z",
+                        "createdAt": "2024-06-12T15:00:04.185Z"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/media/merge-pdfs": {
+      "post": {
+        "summary": "MergePDfs",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "width",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "50",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "50",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "example": [],
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "files"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "organizationId": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "key": {
+                          "type": "string"
+                        },
+                        "bucket": {
+                          "type": "string"
+                        },
+                        "mimetype": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "metaData": {
+                          "type": "object",
+                          "properties": {
+                            "ipAddress": {
+                              "type": "string"
+                            },
+                            "userAgent": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "ipAddress",
+                            "userAgent"
+                          ]
+                        },
+                        "folderId": {
+                          "type": "integer"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "organizationId",
+                        "name",
+                        "url",
+                        "key",
+                        "bucket",
+                        "mimetype",
+                        "size",
+                        "metaData",
+                        "folderId",
+                        "updatedAt",
+                        "createdAt"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "mergePDfs",
+                    "value": {
+                      "statusCode": 200,
+                      "message": "Success",
+                      "data": {
+                        "id": 23,
+                        "organizationId": 7,
+                        "name": "https://cloudloom-bucket.s3.amazonaws.com/merged_1718205220323.pdf",
+                        "url": "http://localhost:8087/media/download?media=merged_1718205220323.pdf",
+                        "key": "merged_1718205220323.pdf",
+                        "bucket": "cloudloom-bucket",
+                        "mimetype": "application/pdf",
+                        "size": 43.2587890625,
+                        "metaData": {
+                          "ipAddress": "::ffff:127.0.0.1",
+                          "userAgent": "PostmanRuntime/7.39.0"
+                        },
+                        "folderId": 20,
+                        "updatedAt": "2024-06-12T15:13:42.860Z",
+                        "createdAt": "2024-06-12T15:13:42.860Z"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/media/upload/multiple": {
+      "post": {
+        "summary": "Upload Multiple files",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "files",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "folderId": {
+                    "example": "1",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "files"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "media": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "organizationId": {
+                                "type": "integer"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string"
+                              },
+                              "key": {
+                                "type": "string"
+                              },
+                              "bucket": {
+                                "type": "string"
+                              },
+                              "mimetype": {
+                                "type": "string"
+                              },
+                              "size": {
+                                "type": "number"
+                              },
+                              "metaData": {
+                                "type": "object",
+                                "properties": {
+                                  "ipAddress": {
+                                    "type": "string"
+                                  },
+                                  "userAgent": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "ipAddress",
+                                  "userAgent"
+                                ]
+                              },
+                              "updatedAt": {
+                                "type": "string"
+                              },
+                              "createdAt": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "organizationId",
+                              "name",
+                              "url",
+                              "key",
+                              "bucket",
+                              "mimetype",
+                              "size",
+                              "metaData",
+                              "updatedAt",
+                              "createdAt"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "media"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "statusCode",
+                    "message",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Upload Multiple files",
+                    "value": {
+                      "statusCode": 200,
+                      "message": "Success",
+                      "data": {
+                        "media": [
+                          {
+                            "id": 32,
+                            "organizationId": 1,
+                            "name": "20200630_091003",
+                            "url": "http://localhost:8087/media/download?media=magnavisio/20200630_091003-7f09285e6911e683e325351129c08d6e.jpg",
+                            "key": "magnavisio/20200630_091003-7f09285e6911e683e325351129c08d6e.jpg",
+                            "bucket": "cloudloom-bucket",
+                            "mimetype": "image/jpeg",
+                            "size": 1306.5908203125,
+                            "metaData": {
+                              "ipAddress": "::ffff:127.0.0.1",
+                              "userAgent": "PostmanRuntime/7.39.0"
+                            },
+                            "updatedAt": "2024-06-08T15:41:46.068Z",
+                            "createdAt": "2024-06-08T15:41:46.068Z"
+                          },
+                          {
+                            "id": 31,
+                            "organizationId": 1,
+                            "name": "mysignature",
+                            "url": "http://localhost:8087/media/download?media=magnavisio/mysignature-9c7697c139feefac4517839ac4e2da40.png",
+                            "key": "magnavisio/mysignature-9c7697c139feefac4517839ac4e2da40.png",
+                            "bucket": "cloudloom-bucket",
+                            "mimetype": "image/png",
+                            "size": 9.3779296875,
+                            "metaData": {
+                              "ipAddress": "::ffff:127.0.0.1",
+                              "userAgent": "PostmanRuntime/7.39.0"
+                            },
+                            "updatedAt": "2024-06-08T15:41:44.864Z",
+                            "createdAt": "2024-06-08T15:41:44.864Z"
+                          },
+                          {
+                            "id": 33,
+                            "organizationId": 1,
+                            "name": "passport",
+                            "url": "http://localhost:8087/media/download?media=magnavisio/passport-8ab1b66096aa4c0adf33af810bb6f911b.jpg",
+                            "key": "magnavisio/passport-8ab1b66096aa4c0adf33af810bb6f911b.jpg",
+                            "bucket": "cloudloom-bucket",
+                            "mimetype": "image/jpeg",
+                            "size": 781.34765625,
+                            "metaData": {
+                              "ipAddress": "::ffff:127.0.0.1",
+                              "userAgent": "PostmanRuntime/7.39.0"
+                            },
+                            "updatedAt": "2024-06-08T15:41:46.694Z",
+                            "createdAt": "2024-06-08T15:41:46.694Z"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/media/download/": {
+      "get": {
+        "summary": "Download Copy",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "width",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "400",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "300",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "media",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "magnavisio/Cloud upload-d69c355e85cf6cc17810a3bc11cedcba6.png",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "download",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "string"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
+          "200": {
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "type": "object",
+                  "properties": {}
                 }
               }
-            }
+            },
+            "headers": {}
           }
-        }
+        },
+        "security": []
       }
     }
   },
   "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
+    "schemas": {},
     "securitySchemes": {
-      "bearerAuth": {
+      "bearer": {
         "type": "http",
         "scheme": "bearer"
       }

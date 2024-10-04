@@ -1,33 +1,30 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'Learn how to interact with the Taficloud API.'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  If you're yet to register for an account, you can do so by visiting the [Taficloud website](https://dashboard.taficloud.com).
 </Note>
 
 ## Welcome
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Welcome to the Taficloud API documentation. This documentation provides information on how to interact with the Taficloud API. The API is built on REST principles and uses standard HTTP methods. The API is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors.
 
 <Card
-  title="Plant Store Endpoints"
+  title="Taficloud Endpoints"
   icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  href="https://github.com/magnavisio/docs/blob/main/api-reference/openapi.json"
 >
   View the OpenAPI specification file
 </Card>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API endpoints are authenticated using Bearer and the api key. You can obtain your API key by visiting the [Taficloud dashboard](https://dashboard.taficloud.com).
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{
+  "Authorization": "Bearer YOUR API KEY"
+}
 ```

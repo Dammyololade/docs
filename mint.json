@@ -7,8 +7,8 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#004DE5",
+    "primary": "#0044CC",
+    "light": "#88B0FF",
     "dark": "#004DE5",
     "background": {
       "dark": "#12131A",
@@ -27,7 +27,7 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://tefi-cloud.firebaseapp.com/"
+    "url": "https://dashboard.taficloud.com"
   },
   "tabs": [
     {
@@ -36,19 +36,7 @@
     }
   ],
   "versions": [
-    "0.0.1"
-  ],
-  "anchors": [
-    {
-      "name": "Issues",
-      "icon": "circle-question",
-      "url": "https://github.com/magnavisio/TafiCloudLib/issues"
-    },
-    {
-      "name": "Source Code",
-      "icon": "github",
-      "url": "https://github.com/magnavisio/TafiCloudLib"
-    }
+    "1.0.0"
   ],
   "navigation": [
     {
@@ -71,22 +59,16 @@
         {
           "group": "Web SDKs",
           "pages": [
-            "sdks/web/vue/setup"
+            "sdks/web/javascript/setup"
           ]
         },
         {
           "group": "Backend SDKs",
           "pages": [
-            "sdks/backend/jvm/setup"
+            "sdks/backend/jvm/setup",
+            "sdks/web/javascript/setup"
           ]
         },
-        {
-          "group": "KMP",
-          "pages": [
-            "sdks/KMP/setup"
-          ]
-        },
-
         {
           "group": "REST API",
           "pages": [
@@ -102,11 +84,16 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Endpoints",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/endpoint/compress-image",
+        "api-reference/endpoint/convert",
+        "api-reference/endpoint/download",
+        "api-reference/endpoint/metadata",
+        "api-reference/endpoint/merge",
+        "api-reference/endpoint/upload-base64",
+        "api-reference/endpoint/upload",
+        "api-reference/endpoint/multiple"
       ]
     }
   ],
